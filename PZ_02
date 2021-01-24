@@ -1,0 +1,63 @@
+//Материал из практической
+public static void main(String[] args) {
+
+	char symb1=1067;
+	char symb2 ='Ы';
+
+	System.out.println("symb1 contains "+ symb1);
+	System.out.println("symb2 contains "+ symb2);
+}
+//
+       char ch = 'J';
+       int intCh = (int) ch;
+
+       System.out.println("J corresponds with "+ intCh);
+}
+//
+	String s1 = "I have ";
+	String s2 = " apples ";
+	int num = 3;
+	String s = s1 + num + s2;
+
+	System.out.println(s);
+}
+//
+package com.metanit;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        int i = 35;
+        String str = Integer.toString(i);
+        System.out.println(str);
+        double  i2 = 32.4e10;
+        String str2 = Double.toString(i2);
+        System.out.println(str2);
+        long  i3 = 3422222;
+        String str3 = Long.toString(i3);
+        System.out.println(str3);
+        float  i4 = 3.46f;
+        String str4 = Float.toString(i4);
+        System.out.println(str4);
+
+
+    }
+}
+
+
+
+package com.metanit;
+
+import java.awt.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Point p1 = new Point(3,5);
+        Point p2=p1;
+        p1 = new Point(7,9);
+        System.out.println(p2.x);
+    }
+}
