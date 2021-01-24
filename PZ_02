@@ -44,9 +44,78 @@ public class Main {
 
     }
 }
+//
+package com.metanit;
+
+public class Main {
+
+    public static void main(String[] args) {
+        char ch = 'S';
+
+        // c использованием класса Character
+        String charToString = Character.toString(ch);
+        System.out.println(charToString);
+
+        // с использованием операции добавления класса String
+        String str = "" + ch;
+        System.out.println(str);
+
+        //с использованием массива
+        String fromChar = new String(new char[] { ch });
+        System.out.println(fromChar);
+
+        // с использованием метода valueOf класса String
+        String valueOfchar = String.valueOf(ch);
+        System.out.println(valueOfchar);
+
+
+        //char to int
+        char ch2 = '9';
+
+        // c использованием метода getNumericValue
+        // класса Character
+        int i1 = Character.getNumericValue(ch2);
+        System.out.println(i1);
+
+        // c использованием метода digit класса Character
+        int i2 = Character.digit(ch2,10);
+        System.out.println(i2);
 
 
 
+
+    }
+}
+//
+package com.metanit;
+
+public class Main {
+
+    public static void main(String[] args) {
+        //int to long
+        int i = 2015;
+        long l = (long) (i);
+        System.out.println(l);
+
+        //int to float
+        int i2 = 2015;
+        float f = (float) (i2);
+        System.out.println(f);
+
+       // long to int
+        long l3 = 214748364;
+        int i3 = (int) l3;
+        System.out.println(i3);
+
+       // double to int
+        double d = 3.14;
+        int i4 = (int) d;
+        System.out.println(i4);
+
+    }
+}
+
+//
 package com.metanit;
 
 import java.awt.*;
@@ -61,3 +130,4 @@ public class Main {
         System.out.println(p2.x);
     }
 }
+//
