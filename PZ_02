@@ -7,13 +7,13 @@ public static void main(String[] args) {
 	System.out.println("symb1 contains "+ symb1);
 	System.out.println("symb2 contains "+ symb2);
 }
-//
+//новый фрагмент
        char ch = 'J';
        int intCh = (int) ch;
 
        System.out.println("J corresponds with "+ intCh);
 }
-//
+//новый фрагмент
 	String s1 = "I have ";
 	String s2 = " apples ";
 	int num = 3;
@@ -21,7 +21,7 @@ public static void main(String[] args) {
 
 	System.out.println(s);
 }
-//
+//новый фрагмент
 package com.metanit;
 
 public class Main {
@@ -44,7 +44,7 @@ public class Main {
 
     }
 }
-//
+//новый фрагмент
 package com.metanit;
 
 public class Main {
@@ -86,7 +86,7 @@ public class Main {
 
     }
 }
-//
+//новый фрагмент
 package com.metanit;
 
 public class Main {
@@ -141,4 +141,56 @@ public class Main {
 
     }
 }
-//
+//новый фрагмент
+ int i=300000;
+        System.out.print(i*i);   // умножение с точностью 32 бита
+        long m=i;
+        System.out.print(m*m);   // умножение с точностью 64 бита
+        System.out.print(1/(m-i)); // попробуем получить разность
+        // значений int и long
+//новый фрагмент
+System.out.print(1000*60*60*24*7);
+        // вычисление для недели
+        System.out.print( "\n" +1000*60*60*24*30);
+        // вычисление для месяца
+// новый фрагмент
+  byte x=5;
+        byte y1=x++;     // на момент начала исполнения x равен 5
+        byte y2=x--;      // на момент начала исполнения x равен 6
+        byte y3=++x;    // на момент начала исполнения x равен 5
+        byte y4=--x;      // на момент начала исполнения x равен 6
+        System.out.println(y1);
+        System.out.println(y2);
+        System.out.println(y3);
+        System.out.println(y4);
+// новый фрагмент
+byte x=-128;
+        System.out.print(-x);
+
+        byte y=127;
+        System.out.print("\n" + ++y);
+// новый фрагмент
+ System.out.print(1+2+"text");
+        System.out.print("\n"+ "text"+1+2);
+// новый фрагмент
+char c='A';
+        System.out.print(c+"\n");
+        System.out.print(c+1+"\n");
+        System.out.print("c="+c+"\n");
+        System.out.print('c'+'='+c+"\n");
+// новый фрагмент
+char c='A';
+        System.out.print(1e20f*1e20f+"\n");
+        System.out.print(-1e200*1e200);
+// новый фрагмент
+ System.out.print(1e-40f/1e10f+"\n");   // underflow для float
+        System.out.print(-1e-300/1e100+"\n");  // underflow для double
+        float f=1e-6f;
+        System.out.print(f+"\n");
+        f+=0.002f;
+        System.out.print(f+"\n");
+        f+=3;
+        System.out.print(f+"\n");
+        f+=4000;
+        System.out.print(f+"\n");
+// новый фрагмент
