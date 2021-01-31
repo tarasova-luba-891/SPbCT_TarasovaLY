@@ -57,46 +57,45 @@ public class Main {
 }
 // задание 3
 package com.metanit;
-
+import java.lang.*;
 import java.io.*;
-public class Main {
-    public static void main(String[] args) throws Exception {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String s = reader.readLine();
-        int day = Integer.parseInt(s);
 
-        if (day == 1)
-        {
-            System.out.println("понедельник");
+public class Main
+{
+    public static void main(String args[]) throws Exception
+    {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Введите день недели: ");
+        String s = reader.readLine();
+
+        switch (s) {
+            case "понедельник":
+                System.out.println("1");
+                break;
+            case "вторник":
+                System.out.println("2");
+                break;
+            case "среда":
+                System.out.println("3");
+                break;
+            case "четверг":
+                System.out.println("4");
+                break;
+            case "пятница":
+                System.out.println("5");
+                break;
+            case "суббота":
+                System.out.println("6");
+                break;
+            case "воскресенье":
+                System.out.println("0");
+                break;
+
+            default:
+                System.out.println("недопустимое значение");
+
         }
-        else if (day == 2)
-        {
-            System.out.println("вторник");
-        }
-        else if (day == 3)
-        {
-            System.out.println("среда");
-        }
-        else if (day == 4)
-        {
-            System.out.println("четверг");
-        }
-        else if (day == 5)
-        {
-            System.out.println("пятница");
-        }
-        else if (day == 6)
-        {
-            System.out.println("суббота");
-        }
-        else if (day == 0)
-        {
-            System.out.println("воскресенье");
-        }
-        else
-        {
-            System.out.println("недопустимое значение");
-        }
+
     }
 }
 // задание 4
