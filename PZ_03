@@ -143,3 +143,23 @@ public class Main {
     }
 }
 // задание 5
+package com.metanit;
+import static java.lang.Math.*;
+public class Main {
+public static void main(String[] args) {
+double a = 1.43;
+double b = 4.18;
+double x1 = -3.29;
+double x2 = 1.64;
+double y1 = 0;
+double y2 = 0;
+y1 = a + 2 * sqrt(Math.sin(a * x1 + 3));
+y2 = Math.log(x2*x2 + b);
+if (x1<=-1) {
+System.out.print("y1 = " + y1 + "\n");
+}
+if (x2>-1){
+System.out.print("y2 = "+y2 + "\n");
+}
+}
+}
