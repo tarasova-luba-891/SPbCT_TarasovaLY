@@ -1,3 +1,198 @@
+Задание 1
+
+
+1)
+package com.company;
+public class Main {
+public static void main(String[] args) {
+Printable printable = createPrintable("Foreign Affairs",false);
+printable.print();
+read(new Book("Java for impatients", "Cay Horstmann"));
+read(new Journal("Java Dayly News"));
+}
+static void read(Printable p){
+p.print();
+}
+static Printable createPrintable(String name, boolean option){
+if(option)
+return new Book(name, "Undefined");
+else
+return new Journal(name);
+}
+}
+interface Printable{
+void print();
+}
+class Book implements Printable{
+String name;
+String author
+Book(String name, String author){
+this.name = name;
+this.author = author;
+}
+public void print() {
+System.out.printf("%s (%s) \n", name, author);
+}
+}
+class Journal implements Printable {
+private String name;
+String getName(){
+return name;
+}
+Journal(String name){
+this.name = name;
+}
+public void print() {
+System.out.println(name);
+}
+}
+
+
+
+
+
+2)
+package com.company;
+public class Main {
+public static void main(String[] args) {
+Button button = new Button(new ButtonClickHandler());
+button.click();
+button.click();
+button.click();
+}
+}
+class ButtonClickHandler implements EventHandler{
+public void execute(){
+System.out.println("Кнопка нажата!");
+}
+}
+interface EventHandler{
+void execute();
+}
+class Button{
+EventHandler handler;
+Button(EventHandler action){
+this.handler=action;
+}
+public void click(){
+handler.execute();
+}
+}
+
+
+
+
+3)
+package com.company;
+public class Main {
+public static void main(String[] args) {
+Button tvButton = new Button(new EventHandler(){
+private boolean on = false;
+public void execute(){
+if(on) {
+System.out.println("Телевизор выключен..");
+on=false;
+}
+else {
+System.out.println("Телевизор включен!");
+on=true;
+}
+}
+});
+Button printButton = new Button(new EventHandler(){
+public void execute(){
+System.out.println("Запущена печать на принтере...");
+}
+});
+tvButton.click();
+printButton.click();
+tvButton.click();
+}
+}
+class ButtonClickHandler implements EventHandler{
+public void execute(){
+System.out.println("Кнопка нажата!");
+}
+}
+interface EventHandler{
+void execute();
+}
+class Button{
+EventHandler handler;
+Button(EventHandler action){
+this.handler=action;
+}
+public void click(){
+handler.execute();
+}
+}
+
+
+
+Задание 3
+
+1) main.java
+
+package com.company;
+public class Main {
+public static void main(String[] args) {
+Car c1 = new Car("Mercedes-Benz", "S-klasse", "S500", 7000000, 2015);
+c1.println();
+Car c2 = new Car("BMW", "7 Series", "750 Li", 7050000, 2016);
+c2.println();
+Car c3 = new Car("Audi", "A8", "Long", 7450000, 2016);
+c3.println();
+}
+}
+
+
+2) car.java
+
+package com.company;
+public class Car {
+String brand;
+String model;
+String configuration;
+int price;
+int year;
+public String getBrand() {
+return brand;
+}
+public String getModel() {
+return model;
+}
+public String getConfiguration() {
+return configuration;
+}
+public int getPrice() {
+return price;
+}
+public int getYear() {
+return year;
+}
+Car(String brand, String model, String configuration, int price, int year) {
+this.brand = brand;
+this.model = model;
+this.configuration = configuration;
+this.price = price;
+this.year = year;
+}
+public void println () {
+System.out.println("\nАвтомобильмарки:" + brand +
+"\nМодель: " + model +
+"\nКонфигурация: " + configuration +
+"\nЦена: " + price +
+"\nГод выпуска: " + year);
+}
+}
+
+3) Printable.java
+
+package com.company;
+public interface Printable {
+void println();
+}
+
 //задание 4
 //-------------------------------------->4.1
 package com.metanit;
