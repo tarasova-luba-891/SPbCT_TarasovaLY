@@ -27,3 +27,121 @@ class Rectangle {
         System.out.println("r1.equals(null) == " + r1.equals(null));
     }
 }
+//1.2
+package demo.lang;
+class Book {
+    private String title;
+    private String author;
+    private int pagesNumber;
+    public Book(String title, String author,
+                int pagesNumber) {
+        super();
+        this.title = title;
+        this.author = author;
+        this.pagesNumber = pagesNumber;
+    }
+    public static void main(String[] args) {
+        Book book = new Book("Java2","Sun",1000);
+        System.out.println("object is: " + book);
+    }
+    public String toString(){
+        return "Book: " + title + " ( " + author +
+                ", " + pagesNumber + " pages )";
+    }
+}
+//1.3
+package demo.lang;
+interface Vehicle {
+    void go();
+}
+class Automobile implements Vehicle {
+    public void go() {
+        System.out.println("Automobile go!");
+    }
+}
+class Truck implements Vehicle {
+    public Truck(int i) {
+        super();
+    }
+    public void go() {
+        System.out.println("Truck go!");
+    }
+}
+class VehicleStarter {
+    public static void main(String[] args) {
+        Vehicle vehicle;
+        String[] vehicleNames = {"demo.lang.Automobile",
+                "demo.lang.Truck", "demo.lang.Tank"};
+        for(int i=0; i<vehicleNames.length; i++) {
+            try {
+                String name = vehicleNames[i];
+                System.out.println("look for class for: " + name);
+                Class aClass = Class.forName(name);
+                System.out.println("creating vehicle...");
+                vehicle = (Vehicle)aClass.newInstance();
+                System.out.println("create vehicle: " + vehicle.getClass());
+                vehicle.go();
+            } catch(ClassNotFoundException e) {
+                System.out.println("Exception: " + e);
+            } catch(InstantiationException e) {
+                System.out.println("Exception: " + e);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+//1.4
+package demo.lang;
+class Main {
+    public static void main(String[] args) {
+        int i = 1;
+        byte b = 1;
+        String value = "1000";
+        Integer iObj = new Integer(i);
+        Byte bObj = new Byte(b);
+        System.out.println("while i==b is " +
+                (i==b));
+        System.out.println("iObj.equals(bObj) is "
+                + iObj.equals(bObj));
+        Long lObj = new Long(value);
+        System.out.println("lObj = " +
+                lObj.toString());
+        Long sum = new Long(lObj.longValue() +
+                iObj.byteValue() +
+                bObj.shortValue());
+        System.out.println("The sum = " +
+                sum.doubleValue());
+    }
+}
+//1.5
+package demo.lang;
+class Test {
+    public Test() {
+    }
+
+    public static void main(String[] args) {
+        Test t = new Test();
+        String s1 = "Hello world !!!";
+        String s2 = "Hello world !!!";
+        System.out.println("String`s equally = " +
+                (s1.equals(s2)));
+        System.out.println(
+                "Strings are the same = " + (s1==s2));
+    }
+}
+//1.6
+package demo.lang;
+ class Test {
+    public Test() {
+    }
+    public static void main(String[] args) {
+        Test t = new Test();
+        String s1 = "Hello world !!!";
+        String s2 = new String("Hello world !!!");
+        System.out.println("String`s equally = " +
+                (s1.equals(s2)));
+        System.out.println(
+                "Strings are the same = " + (s1==s2));
+    }
+}
