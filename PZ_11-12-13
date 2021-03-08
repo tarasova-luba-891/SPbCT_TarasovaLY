@@ -1,5 +1,5 @@
 // Занятие № 10. Пакет java.lang 
-//1.1
+//1
 package demo.lang;
 class Rectangle {
     public int sideA;
@@ -27,7 +27,7 @@ class Rectangle {
         System.out.println("r1.equals(null) == " + r1.equals(null));
     }
 }
-//1.2
+//2
 package demo.lang;
 class Book {
     private String title;
@@ -49,7 +49,7 @@ class Book {
                 ", " + pagesNumber + " pages )";
     }
 }
-//1.3
+//3
 package demo.lang;
 interface Vehicle {
     void go();
@@ -91,7 +91,7 @@ class VehicleStarter {
         }
     }
 }
-//1.4
+//4
 package demo.lang;
 class Main {
     public static void main(String[] args) {
@@ -114,7 +114,7 @@ class Main {
                 sum.doubleValue());
     }
 }
-//1.5
+//5
 package demo.lang;
 class Test {
     public Test() {
@@ -130,7 +130,7 @@ class Test {
                 "Strings are the same = " + (s1==s2));
     }
 }
-//1.6
+//6
 package demo.lang;
  class Test {
     public Test() {
@@ -143,5 +143,196 @@ package demo.lang;
                 (s1.equals(s2)));
         System.out.println(
                 "Strings are the same = " + (s1==s2));
+    }
+}
+//7
+package demo.lang;
+ class Test {
+    public static void main(String[] args) {
+        Test t = new Test();
+        String s = "prefix !";
+        System.out.println(s);
+        s = s.trim();
+        System.out.println(s);
+        s = s.concat(" suffix");
+        System.out.println(s);
+    }
+}
+//8
+package demo.lang;
+class Test {
+    public static void main(String[] args) {
+        Test t = new Test();
+        String s = new String("ssssss");
+        StringBuffer sb =
+                new StringBuffer("bbbbbb");
+        s.concat("-aaa");
+        sb.append("-aaa");
+        System.out.println(s);
+        System.out.println(sb);
+    }
+}
+
+//9
+package demo.lang;
+class Test {
+    public static void main(String[] args) {
+        StringBuffer sb = new StringBuffer("abc");
+        String str = sb.append("e").insert(4,
+                "f").insert(3,"d").toString();
+        System.out.println(str);
+
+    }
+}
+
+//10
+package demo.lang;
+class Test {
+    public static void main(String[] args) {
+        Test t = new Test();
+        StringBuffer sb = new StringBuffer("aaa");
+        System.out.println("Before = " + sb);
+        t.doTest(sb);
+        System.out.println("After = " + sb);
+    }
+    void doTest(StringBuffer theSb){
+        theSb.append("-bbb");
+    }
+}
+
+//Занятие № 11. Пакет java.util
+//1
+package demo.lang;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+class Test {
+    public Test() {
+    }
+    public static void main(String[] args) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMMM dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR,2002);
+        cal.set(Calendar.MONTH,Calendar.AUGUST);
+        cal.set(Calendar.DAY_OF_MONTH,31);
+        System.out.println(" Initialy set date: " + sdf.format(cal.getTime()));
+        cal.set(Calendar.MONTH,Calendar.SEPTEMBER);
+        System.out.println(" Date with month changed : " + sdf.format(cal.getTime()));
+        cal.set(Calendar.DAY_OF_MONTH,30);
+        System.out.println(" Date with day changed : " + sdf.format(cal.getTime()));
+
+    }
+}
+
+//2
+package demo.lang;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+class Test {
+    public Test() {
+    }
+    public static void main(String[] args) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMMM dd HH:mm:ss");
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR,2002);
+        cal.set(Calendar.MONTH,Calendar.AUGUST);
+        cal.set(Calendar.DAY_OF_MONTH,31);
+        System.out.println(" Initialy set date: " + sdf.format(cal.getTime()));
+        cal.set(Calendar.MONTH,Calendar.SEPTEMBER);
+        cal.set(Calendar.DAY_OF_MONTH,30);
+        System.out.println(" Date with day and month changed : " + sdf.format(cal.getTime()));
+    }
+}
+//3
+package demo.lang;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+class Test {
+
+    public Test() {
+    }
+    public static void main(String[] args) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMMM dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR,2002);
+        cal.set(Calendar.MONTH,Calendar.AUGUST);
+        cal.set(Calendar.DAY_OF_MONTH,31);
+        cal.set(Calendar.HOUR_OF_DAY,19);
+        cal.set(Calendar.MINUTE,30);
+        cal.set(Calendar.SECOND,00);
+        System.out.println("Current date: " + sdf.format(cal.getTime()));
+        cal.add(Calendar.SECOND,75);
+        System.out.println("Current date: " + sdf.format(cal.getTime()));
+        cal.add(Calendar.MONTH,1);
+        System.out.println("Current date: " + sdf.format(cal.getTime()));
+    }
+}
+//4
+package demo.lang;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+class Test {
+
+    public Test() {
+    }
+    public static void main(String[] args) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMMM dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR,2002);
+        cal.set(Calendar.MONTH,Calendar.AUGUST);
+        cal.set(Calendar.DAY_OF_MONTH,31);
+        cal.set(Calendar.HOUR_OF_DAY,19);
+        cal.set(Calendar.MINUTE,30);
+        cal.set(Calendar.SECOND,00);
+        System.out.println("Current date: " + sdf.format(cal.getTime()));
+        cal.roll(Calendar.SECOND,75);
+        System.out.println("Rule 1: " + sdf.format(cal.getTime()));
+        cal.roll(Calendar.MONTH,1);
+        System.out.println("Rule 2: " + sdf.format(cal.getTime()));
+    }
+}
+
+//5
+package demo.lang;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.TimeZone;
+
+class Test {
+    public Test() {
+    }
+    public static void main(String[] args) {
+        Test test = new Test();
+        TimeZone tz = TimeZone.getDefault();
+        int rawOffset = tz.getRawOffset();
+        System.out.println("Current TimeZone" + tz.getDisplayName() + tz.getID() + "\n\n");
+        // Display all available TimeZones
+        System.out.println("All Available TimeZones \n");
+        String[] idArr = tz.getAvailableIDs();
+        for(int cnt=0;cnt < idArr.length;cnt++){
+            tz = TimeZone.getTimeZone(idArr[cnt]);
+            System.out.println(test.padr(tz.getDisplayName() +
+                    tz.getID(),64) + " raw offset=" + tz.getRawOffset() +
+                    ";hour offset=(" + tz.getRawOffset()/ (1000 * 60 * 60 ) + ")");
+        }
+        // Display all available TimeZones same as for Moscow
+        System.out.println("\n\n TimeZones same as for Moscow \n");
+        idArr = tz.getAvailableIDs(rawOffset);
+        for(int cnt=0;cnt < idArr.length;cnt++){
+            tz = TimeZone.getTimeZone(idArr[cnt]);
+            System.out.println(test.padr(tz.getDisplayName()+
+                    tz.getID(),64) + " raw offset=" + tz.getRawOffset() +
+                    ";hour offset=(" + tz.getRawOffset()/ (1000 * 60 * 60 ) + ")");
+        }
+    }
+    String padr(String str,int len){
+        if(len - str.length() > 0){
+            char[] buf = new char[len - str.length()];
+            Arrays.fill(buf,' ');
+            return str + new String(buf);
+        }else{
+            return str.substring(0,len);
+        }
     }
 }
