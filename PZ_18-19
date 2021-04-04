@@ -1,1 +1,496 @@
-====== задание 1
+ЗАДАНИЕ 1
+------------------------------
+1)
+// вывод IP-адреса локального компьютера
+import java.net.*;
+public class MyLocal {
+    public static void main(String[] args){
+        InetAddress myIP = null;
+        try {
+            myIP = InetAddress.getLocalHost();}
+        catch (UnknownHostException e) {}
+        System.out.println(myIP);
+    }
+}
+
+2)
+// извлечение IP-адреса из имени домена
+import java.net.*;
+public class IPfromDNS {
+    public static void main(String[] args){
+        InetAddress bsu = null;
+        try {
+            bsu = InetAddress.getByName("www.sutkt.ru"); }
+        catch (UnknownHostException e){ }
+        System.out.println(bsu);
+    }
+}
+
+3)
+import java.net.*;
+import java.io.*;
+
+public class ParseURL {
+    public static void main(String[] args) throws Exception {
+        URL aURL = new URL("http://java.sun.com:80/docs/books/tutorial"
+                + "/index.html?name=networking#DOWNLOADING");
+        System.out.println("protocol = " + aURL.getProtocol());
+        System.out.println("authority = " + aURL.getAuthority());
+        System.out.println("host = " + aURL.getHost());
+        System.out.println("port = " + aURL.getPort());
+        System.out.println("path = " + aURL.getPath());
+        System.out.println("query = " + aURL.getQuery());
+        System.out.println("filename = " + aURL.getFile());
+        System.out.println("ref = " + aURL.getRef());
+    }
+}
+
+4)
+// передача клиенту строки : Server. java
+import java.io.*;
+import java.net.*;
+public class Server {
+    public static void main(String args[]) {
+        Socket s = null;
+        try {//посылка строки клиенту
+            ServerSocket server = new ServerSocket(3456);
+            s = server.accept();
+            PrintStream ps = new PrintStream(s.getOutputStream());
+            ps.println("привет!");
+            ps.flush();
+            s.close(); // разрыв соединения
+        }catch (IOException e){System.out.println("ошибка: " + e); }
+    }
+}
+
+// получение клиентом строки : Client. java
+import java.io.*;
+import java.net.*;
+public class Client {
+    public static void main(String[] args) {
+        Socket socket = null;
+        try {//получение строки клиентом
+            socket = new Socket("localhost", 3456);
+            BufferedReader dis = new BufferedReader(new
+                    InputStreamReader(socket.getInputStream()));
+            String msg = dis.readLine();
+            System.out.println(msg);
+        } catch (IOException e) {System.out.println("ошибка: " + e); }
+    }
+}
+
+ЗАДАНИЕ 2
+------------------------------
+Server:
+package com.metanit;
+
+import java.io.*;
+import java.net.*;
+import java.util.LinkedList;
+
+class ServerSomthing extends Thread {
+
+    private Socket socket;
+    private BufferedReader in;
+    private BufferedWriter out;
+
+    public ServerSomthing(Socket socket) throws IOException {
+        this.socket = socket;
+        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+        Main.story.printStory(out);
+        start();
+    }
+
+    public void run() {
+        String word;
+        try {
+
+            word = in.readLine();
+            try {
+                out.write(word + "\n");
+                out.flush();
+            } catch (IOException ignored) {
+            }
+            try {
+                while (true) {
+                    word = in.readLine();
+                    if (word.equals("stop")) {
+                        this.downService();
+                        break;
+                    }
+                    System.out.println("Echoing: " + word);
+                    Main.story.addStoryEl(word);
+                    for (ServerSomthing vr : Main.serverList) {
+                        vr.send(word);
+                    }
+                }
+            } catch (NullPointerException ignored) {
+            }
+
+
+        } catch (IOException e) {
+            this.downService();
+        }
+    }
+
+    private void send(String msg) {
+        try {
+            out.write(msg + "\n");
+            out.flush();
+        } catch (IOException ignored) {
+        }
+
+    }
+
+    private void downService() {
+        try {
+            if (!socket.isClosed()) {
+                socket.close();
+                in.close();
+                out.close();
+                for (ServerSomthing vr : Main.serverList) {
+                    if (vr.equals(this)) vr.interrupt();
+                    Main.serverList.remove(this);
+                }
+            }
+        } catch (IOException ignored) {
+        }
+    }
+}
+
+class Story {
+
+    private LinkedList<String> story = new LinkedList<>();
+
+    public void addStoryEl(String el) {
+        if (story.size() >= 10) {
+            story.removeFirst();
+            story.add(el);
+        } else {
+            story.add(el);
+        }
+    }
+
+
+    public void printStory(BufferedWriter writer) {
+        if (story.size() > 0) {
+            try {
+                writer.write("History messages" + "\n");
+                for (String vr : story) {
+                    writer.write(vr + "\n");
+                }
+                writer.write("/...." + "\n");
+                writer.flush();
+            } catch (IOException ignored) {
+            }
+
+        }
+
+    }
+}
+
+public class Main {
+
+    public static final int PORT = 8080;
+    public static LinkedList<ServerSomthing> serverList = new LinkedList<>();
+    public static Story story;
+
+    public static void main(String[] args) throws IOException {
+        ServerSocket server = new ServerSocket(PORT);
+        story = new Story();
+        System.out.println("Server Started");
+        try {
+            while (true) {
+                Socket socket = server.accept();
+                try {
+                    serverList.add(new ServerSomthing(socket));
+                } catch (IOException e) {
+                    socket.close();
+                }
+            }
+        } finally {
+            server.close();
+        }
+    }
+}
+
+
+Client 1:
+package com.metanit;
+
+
+import java.net.*;
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+class ClientSomthing {
+
+    private Socket socket;
+    private BufferedReader in;
+    private BufferedWriter out;
+    private BufferedReader inputUser;
+    private String addr;
+    private int port;
+    private String nickname;
+    private Date time;
+    private String dtime;
+    private SimpleDateFormat dt1;
+
+    public ClientSomthing(String addr, int port) {
+        this.addr = addr;
+        this.port = port;
+        try {
+            this.socket = new Socket(addr, port);
+        } catch (IOException e) {
+            System.err.println("Socket failed");
+        }
+        try {
+
+            inputUser = new BufferedReader(new InputStreamReader(System.in));
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            this.pressNickname();
+            new ReadMsg().start();
+            new WriteMsg().start();
+        } catch (IOException e) {
+
+            ClientSomthing.this.downService();
+        }
+
+    }
+
+
+    private void pressNickname() {
+        System.out.print("Press your nick: ");
+        try {
+            nickname = inputUser.readLine();
+            out.write("Hello " + nickname + "\n");
+            out.flush();
+        } catch (IOException ignored) {
+        }
+
+    }
+
+
+    private void downService() {
+        try {
+            if (!socket.isClosed()) {
+                socket.close();
+                in.close();
+                out.close();
+            }
+        } catch (IOException ignored) {
+        }
+    }
+
+    private class ReadMsg extends Thread {
+        @Override
+        public void run() {
+
+            String str;
+            try {
+                while (true) {
+                    str = in.readLine();
+                    if (str.equals("stop")) {
+                        ClientSomthing.this.downService();
+                        break;
+                    }
+                    System.out.println(str);
+                }
+            } catch (IOException e) {
+                ClientSomthing.this.downService();
+            }
+        }
+    }
+
+    public class WriteMsg extends Thread {
+
+        @Override
+        public void run() {
+            while (true) {
+                String userWord;
+                try {
+                    time = new Date();
+                    dt1 = new SimpleDateFormat("HH:mm:ss");
+                    dtime = dt1.format(time);
+                    userWord = inputUser.readLine();
+                    if (userWord.equals("stop")) {
+                        out.write("stop" + "\n");
+                        ClientSomthing.this.downService();
+                        break;
+                    } else {
+                        out.write("(" + dtime + ") " + nickname + ": " + userWord + "\n");
+                    }
+                    out.flush();
+                } catch (IOException e) {
+                    ClientSomthing.this.downService();
+
+                }
+
+            }
+        }
+    }
+}
+
+public class Main {
+
+    public static String ipAddr = "localhost";
+    public static int port = 8080;
+
+    public static void main(String[] args) {
+        new ClientSomthing(ipAddr, port);
+    }
+}
+Client 2:
+package com.metanit;
+
+import java.net.*;
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+/**
+ * создание клиента со всеми необходимыми утилитами, точка входа в программу в классе Client
+ */
+
+class ClientSomthing {
+
+    private Socket socket;
+    private BufferedReader in; // поток чтения из сокета
+    private BufferedWriter out; // поток чтения в сокет
+    private BufferedReader inputUser; // поток чтения с консоли
+    private String addr; // ip адрес клиента
+    private int port; // порт соединения
+    private String nickname; // имя клиента
+    private Date time;
+    private String dtime;
+    private SimpleDateFormat dt1;
+
+    /**
+     * для создания необходимо принять адрес и номер порта
+     *
+     * @param addr
+     * @param port
+     */
+
+    public ClientSomthing(String addr, int port) {
+        this.addr = addr;
+        this.port = port;
+        try {
+            this.socket = new Socket(addr, port);
+        } catch (IOException e) {
+            System.err.println("Socket failed");
+        }
+        try {
+            // потоки чтения из сокета / записи в сокет, и чтения с консоли
+            inputUser = new BufferedReader(new InputStreamReader(System.in));
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            this.pressNickname(); // перед началом необходимо спросит имя
+            new ReadMsg().start(); // нить читающая сообщения из сокета в бесконечном цикле
+            new WriteMsg().start(); // нить пишущая сообщения в сокет приходящие с консоли в бесконечном цикле
+        } catch (IOException e) {
+            // Сокет должен быть закрыт при любой
+            // ошибке, кроме ошибки конструктора сокета:
+            ClientSomthing.this.downService();
+        }
+        // В противном случае сокет будет закрыт
+        // в методе run() нити.
+    }
+
+    /**
+     * просьба ввести имя,
+     * и отсылка эхо с приветсвием на сервер
+     */
+
+    private void pressNickname() {
+        System.out.print("Press your nick: ");
+        try {
+            nickname = inputUser.readLine();
+            out.write("Hello " + nickname + "\n");
+            out.flush();
+        } catch (IOException ignored) {
+        }
+
+    }
+
+    /**
+     * закрытие сокета
+     */
+    private void downService() {
+        try {
+            if (!socket.isClosed()) {
+                socket.close();
+                in.close();
+                out.close();
+            }
+        } catch (IOException ignored) {}
+    }
+
+    // нить чтения сообщений с сервера
+    private class ReadMsg extends Thread {
+        @Override
+        public void run() {
+
+            String str;
+            try {
+                while (true) {
+                    str = in.readLine(); // ждем сообщения с сервера
+                    if (str.equals("stop")) {
+                        ClientSomthing.this.downService(); // харакири
+                        break; // выходим из цикла если пришло "stop"
+                    }
+                    System.out.println(str); // пишем сообщение с сервера на консоль
+                }
+            } catch (IOException e) {
+                ClientSomthing.this.downService();
+            }
+        }
+    }
+
+    // нить отправляющая сообщения приходящие с консоли на сервер
+    public class WriteMsg extends Thread {
+
+        @Override
+        public void run() {
+            while (true) {
+                String userWord;
+                try {
+                    time = new Date(); // текущая дата
+                    dt1 = new SimpleDateFormat("HH:mm:ss"); // берем только время до секунд
+                    dtime = dt1.format(time); // время
+                    userWord = inputUser.readLine(); // сообщения с консоли
+                    if (userWord.equals("stop")) {
+                        out.write("stop" + "\n");
+                        ClientSomthing.this.downService(); // харакири
+                        break; // выходим из цикла если пришло "stop"
+                    } else {
+                        out.write("(" + dtime + ") " + nickname + ": " + userWord + "\n"); // отправляем на сервер
+                    }
+                    out.flush(); // чистим
+                } catch (IOException e) {
+                    ClientSomthing.this.downService(); // в случае исключения тоже харакири
+
+                }
+
+            }
+        }
+    }
+}
+
+public class Main {
+
+    public static String ipAddr = "localhost";
+    public static int port = 8080;
+
+    /**
+     * создание клиент-соединения с узананными адресом и номером порта
+     * @param args
+     */
+
+    public static void main(String[] args) {
+        new ClientSomthing(ipAddr, port);
+    }
+}
