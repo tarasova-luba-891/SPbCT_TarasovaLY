@@ -439,7 +439,7 @@ class ClientSomthing {
                 while (true) {
                     str = in.readLine(); // ждем сообщения с сервера
                     if (str.equals("stop")) {
-                        ClientSomthing.this.downService(); // харакири
+                        ClientSomthing.this.downService(); 
                         break; // выходим из цикла если пришло "stop"
                     }
                     System.out.println(str); // пишем сообщение с сервера на консоль
@@ -464,14 +464,14 @@ class ClientSomthing {
                     userWord = inputUser.readLine(); // сообщения с консоли
                     if (userWord.equals("stop")) {
                         out.write("stop" + "\n");
-                        ClientSomthing.this.downService(); // харакири
+                        ClientSomthing.this.downService(); 
                         break; // выходим из цикла если пришло "stop"
                     } else {
                         out.write("(" + dtime + ") " + nickname + ": " + userWord + "\n"); // отправляем на сервер
                     }
                     out.flush(); // чистим
                 } catch (IOException e) {
-                    ClientSomthing.this.downService(); // в случае исключения тоже харакири
+                    ClientSomthing.this.downService(); 
 
                 }
 
