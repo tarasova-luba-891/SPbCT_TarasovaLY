@@ -45,13 +45,55 @@ public class Main {
 }
 
 4)
+package com.metanit;
+
+public class Main {
+
+    public static void main(String[] args) {
+        int[] rectangle = new int[]{647, 170};
+        int square = 30;
+        int squaresCount = (rectangle[0] / square) * (rectangle[1] / square);
+
+        System.out.println("Количество квадратов: " + squaresCount);
+    }
+}
 
 5)
+package com.metanit;
+import java.util.Scanner;
+public class Main {
 
+    public static void main(String[] args) {
+        Scanner console = new Scanner(System.in);
+        System.out.print("Введите число");
+        int a = console.nextInt();
+        if((a > -10)&&(a < 10))
+            a += 5;
+        else
+            a -= 10;
+        System.out.println("Итоговое число: " + a);
+    }
+}
 6)
+package com.metanit;
+import java.util.Scanner;
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner console = new Scanner(System.in);
+        System.out.print("Введите 3 числа:");
+        int a = console.nextInt();
+        int b = console.nextInt();
+        int c = console.nextInt();
+        if(a+b==c | a+c==b | c+b==a)
+            System.out.println("yes");
+        else
+        System.out.println("нельзя взять какие-то два числа и в сумме получить третье ");
+    }
+}
 
 7)
-
+-
 8)
 
 9)
